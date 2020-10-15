@@ -1,0 +1,150 @@
+type: edu
+custom_name: stage5
+files:
+- name: src/encryptdecrypt/Main.java
+  visible: true
+  text: "package encryptdecrypt;\nimport java.util.Scanner;\npublic class Main {\n\
+    \    public static void enc(String line, int count) {\n        String res = \"\
+    \";\n        \n        for (int i = 0; i < line.length(); i++) {\n           \
+    \ char ch = (char)(line.charAt(i) + count);\n            /*\n            int indexCh\
+    \ = (int)ch;\n            if (indexCh >= 97 && indexCh <= 122) {\n           \
+    \     if (indexCh + count > 122) {\n                    int next = (ch + count)\
+    \ % 122;\n                    ch = (char)(96 + next);\n                } else\
+    \ {\n                    ch = (char)(indexCh + count);\n                }\n  \
+    \          }\n            */\n            \n            res += ch;   \n      \
+    \  }\n        \n        System.out.print(res);\n    }\n    \n    public static\
+    \ void dec(String line, int count) {\n        String res = \"\";\n        \n \
+    \       for (int i = 0; i < line.length(); i++) {\n            char ch = (char)(line.charAt(i)\
+    \ - count);\n            res += ch;  \n        }\n        System.out.print(res);\n\
+    \    }\n    \n    public static void getMode(String mode, String line, int key)\
+    \ {\n        if (mode.equals(\"dec\")) {\n            dec(line, key);\n      \
+    \  } else {\n            enc(line, key);\n        }\n    }\n    \n    \n    public\
+    \ static void main(String[] args) {\n        Scanner scanner = new Scanner(System.in);\n\
+    \        String mode = \"enc\";\n        String line = \"\";\n        int key\
+    \ = 0;\n        for (int i = 0; i < args.length; i += 2) {\n            switch\
+    \ (args[i]) {\n                case \"-data\":\n                    line = args[i\
+    \ + 1];\n                    break;\n                case \"-key\":\n        \
+    \            key = Integer.parseInt(args[i + 1]);\n                    break;\n\
+    \                case \"-mode\":\n                    mode = args[i + 1];\n  \
+    \                  break;\n                default:\n                    break;\n\
+    \            }\n        }\n        getMode(mode, line, key);\n    }\n}\n"
+  learner_created: false
+- name: test/EncryptDecryptTest.java
+  visible: false
+  text: |
+    import encryptdecrypt.Main;
+    import org.hyperskill.hstest.common.FileUtils;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testcase.TestCase;
+
+    import java.io.IOException;
+    import java.nio.charset.StandardCharsets;
+    import java.nio.file.Files;
+    import java.nio.file.NoSuchFileException;
+    import java.nio.file.Path;
+    import java.nio.file.Paths;
+    import java.util.List;
+
+    public class EncryptDecryptTest extends StageTest<String> {
+        public EncryptDecryptTest() {
+            super(Main.class);
+        }
+
+        @Override
+        public List<TestCase<String>> generate() {
+            return List.of(
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "enc",
+                        "-key", "5",
+                        "-in", "in.txt",
+                        "-out", "output.txt"
+                    )
+                    .setAttach("\\jqhtrj%yt%m~ujwxpnqq&")
+                    .addFile("in.txt", "Welcome to hyperskill!"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-key", "0",
+                        "-mode", "enc",
+                        "-in", "input.txt",
+                        "-out", "output.txt"
+                    )
+                    .setAttach("Hello")
+                    .addFile("input.txt", "Hello"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-key", "1",
+                        "-in", "i.txt",
+                        "-out", "output.txt",
+                        "-mode", "enc"
+                    )
+                    .setAttach("123456789")
+                    .addFile("i.txt", "012345678"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "dec",
+                        "-in", "input.txt",
+                        "-out", "output.txt",
+                        "-key", "5"
+                    )
+                    .setAttach("Welcome to hyperskill!")
+                    .addFile("input.txt", "\\jqhtrj%yt%m~ujwxpnqq&"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "dec",
+                        "-key", "0",
+                        "-in", "input.txt",
+                        "-out", "output.txt"
+                    )
+                    .setAttach("Hi")
+                    .addFile("input.txt", "Hi"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "dec",
+                        "-key", "1",
+                        "-in", "input.txt",
+                        "-out", "output.txt"
+                    )
+                    .setAttach("111122223333")
+                    .addFile("input.txt", "222233334444")
+            );
+        }
+
+        @Override
+        public CheckResult check(String reply, String clue) {
+            String fileName = "output.txt";
+            String output;
+
+            try {
+                Path path = Paths.get(FileUtils.CURRENT_DIR + fileName);
+                output = Files.readString(path, StandardCharsets.UTF_8);
+            } catch (NoSuchFileException e) {
+                return new CheckResult(false, "File output.txt not found!");
+            } catch (IOException e) {
+                return new CheckResult(false, "Cannot read from file!");
+            }
+
+            if (!output.trim().equals(clue.trim())) {
+                return new CheckResult(false, "Wrong result in the file!");
+            }
+
+            return new CheckResult(true);
+        }
+    }
+  learner_created: false
+- name: output.txt
+  visible: true
+  learner_created: true
+feedback_link: https://hyperskill.org/projects/46/stages/249/implement
+status: Solved
+feedback:
+  message: Congratulations! Continue on <a href="https://hyperskill.org/projects/46/stages/249/implement">JetBrains
+    Academy</a>
+  time: Mon, 12 Oct 2020 12:40:37 UTC
+record: 4

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="EncryptDecryptTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2020-10-15T17:54:45" hostname="DESKTOP-F561BR7" time="0.281">
+  <properties/>
+  <testcase name="start" classname="EncryptDecryptTest" time="0.281"/>
+  <system-out><![CDATA[?[1;31m
+Start test 1?[0m
+\jqhtrj%yt%m~ujwxpnqq&
+?[1;31m
+Start test 2?[0m
+Hello
+?[1;31m
+Start test 3?[0m
+123456789
+?[1;31m
+Start test 4?[0m
+Welcome to hyperskill!
+?[1;31m
+Start test 5?[0m
+Hi
+?[1;31m
+Start test 6?[0m
+111122223333
+?[1;31m
+Start test 7?[0m
+bjqhtrj yt mdujwxpnqq
+?[1;31m
+Start test 8?[0m
+treasure
+?[1;31m
+Start test 9?[0m
+cphpchdjcijdjibhdjebhjucspucmdmudbnuccup
+?[1;31m
+Start test 10?[0m
+y
+?[1;31m
+Start test 11?[0m
+i
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

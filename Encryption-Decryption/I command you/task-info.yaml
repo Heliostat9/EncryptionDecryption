@@ -1,0 +1,101 @@
+type: edu
+custom_name: stage4
+files:
+- name: src/encryptdecrypt/Main.java
+  visible: true
+  text: "package encryptdecrypt;\nimport java.util.Scanner;\npublic class Main {\n\
+    \    public static void enc(String line, int count) {\n        String res = \"\
+    \";\n        \n        for (int i = 0; i < line.length(); i++) {\n           \
+    \ char ch = (char)(line.charAt(i) + count);\n            /*\n            int indexCh\
+    \ = (int)ch;\n            if (indexCh >= 97 && indexCh <= 122) {\n           \
+    \     if (indexCh + count > 122) {\n                    int next = (ch + count)\
+    \ % 122;\n                    ch = (char)(96 + next);\n                } else\
+    \ {\n                    ch = (char)(indexCh + count);\n                }\n  \
+    \          }\n            */\n            \n            res += ch;   \n      \
+    \  }\n        \n        System.out.print(res);\n    }\n    \n    public static\
+    \ void dec(String line, int count) {\n        String res = \"\";\n        \n \
+    \       for (int i = 0; i < line.length(); i++) {\n            char ch = (char)(line.charAt(i)\
+    \ - count);\n            res += ch;  \n        }\n        System.out.print(res);\n\
+    \    }\n    \n    public static void main(String[] args) {\n        Scanner scanner\
+    \ = new Scanner(System.in);\n        String mode = scanner.nextLine().toLowerCase();\n\
+    \        String line = scanner.nextLine();\n        int countNext = scanner.nextInt();\n\
+    \        if (mode.equals(\"dec\")) {\n            dec(line, countNext);\n    \
+    \    } else {\n            enc(line, countNext);\n        }\n    }\n}\n"
+  learner_created: false
+- name: test/EncryptDecryptTest.java
+  visible: false
+  text: |
+    import encryptdecrypt.Main;
+    import org.hyperskill.hstest.stage.StageTest;
+    import org.hyperskill.hstest.testcase.CheckResult;
+    import org.hyperskill.hstest.testcase.TestCase;
+
+    import java.util.List;
+
+    public class EncryptDecryptTest extends StageTest<String> {
+        public EncryptDecryptTest() {
+            super(Main.class);
+        }
+
+        @Override
+        public List<TestCase<String>> generate() {
+            return List.of(
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "enc",
+                        "-key", "5",
+                        "-data", "Welcome to hyperskill!"
+                    )
+                    .setAttach("\\jqhtrj%yt%m~ujwxpnqq&"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-key", "0",
+                        "-mode", "enc",
+                        "-data", "Hello"
+                    )
+                    .setAttach("Hello"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-key", "1",
+                        "-data", "012345678",
+                        "-mode", "enc"
+                    )
+                    .setAttach("123456789"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "dec",
+                        "-data", "\\jqhtrj%yt%m~ujwxpnqq&",
+                        "-key", "5"
+                    )
+                    .setAttach("Welcome to hyperskill!"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "dec",
+                        "-key", "0",
+                        "-data", "Hi"
+                    )
+                    .setAttach("Hi"),
+
+                new TestCase<String>()
+                    .addArguments(
+                        "-mode", "dec",
+                        "-key", "1",
+                        "-data", "222233334444"
+                    )
+                    .setAttach("111122223333")
+            );
+        }
+
+        @Override
+        public CheckResult check(String reply, String clue) {
+            return new CheckResult(reply.trim().equals(clue.trim()));
+        }
+    }
+  learner_created: false
+feedback_link: https://hyperskill.org/projects/46/stages/248/implement
+status: Solved
+record: 3
